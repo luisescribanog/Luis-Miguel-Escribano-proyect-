@@ -16,6 +16,7 @@ class Player {
     }
     draw() {
         this.ctx.drawImage(this.img, this.x, this.y, this.w, this.h)
+
         this.bullets.forEach(b => b.draw())
       
       }
@@ -48,6 +49,8 @@ class Player {
             this.vx = 5
         } else if( key === LEFT ){
             this.vx = -5
+        } else if (key = SPACE){
+            this.shoot()
         }
     }
 
@@ -64,8 +67,8 @@ class Player {
         // this.bullets.push(bullet)
 
 
-        const x = this.x + this.w
-        const y = this.y + this.h / 2
+        const x = this.x 
+        const y = this.y       
         const bullet = new Bullet(this.ctx, x, y)
         this.bullets.push(bullet)
     }
