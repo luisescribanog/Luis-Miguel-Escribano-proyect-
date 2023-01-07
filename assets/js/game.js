@@ -1,8 +1,4 @@
-const NUM_ENEMIES = 13;
-const NUM_ROW_ENEMIES = 5;
 
-let SENTIDO_ENEMIES = -1;
-let STEPS = 0;
 
 class Game {
   constructor(ctx) {
@@ -10,19 +6,21 @@ class Game {
     this.interval = null;
     this.bg = new Background(ctx);
     this.player = new Player(ctx);
-    this.enemies = new Array(NUM_ENEMIES).fill({}); // me rellena el array vacio con 8 elementos
+    this.enemies = new Array(NUM_ENEMIES).fill({}); // me rellena el array  
     this.enemies = this.enemies.map((data, i) => {
       // devuelve copia del array
-      const row = Math.floor(i / NUM_ROW_ENEMIES);
-      const aux = i % NUM_ROW_ENEMIES;
-      return new Enemies(ctx, 200 + aux * 50, 100 + row * 80, SENTIDO_ENEMIES);
+      const row = Math.floor(i / NUM_ROW_ENEMIES); //indice vertical
+      const aux = i % NUM_ROW_ENEMIES; // aqui consigo  qaue se bajen los enemigos
+      return new Enemies(ctx, 200 + aux * 50, 100 + row * 80, SENTIDO_ENEMIES); // ctx, x, y , s
     });
     console.log(this.enemies);
+
+    this.score = 0
   }
 
   start() {
     this.initlistener();
-    this.interval = setInterval(() => {
+    this.interval = setInterval(() => { //arrow function //para poder acceder a las propiedades del objeto
       this.clear();
       this.draw();
       this.move();
@@ -31,28 +29,56 @@ class Game {
 
   stop() {
     clearInterval(this.interval);
+     
+    this.interval = null;
+    this.bg = new Background(ctx);
+    this.player = new Player(ctx);
+    this.enemies = new Array(NUM_ENEMIES).fill({}); // me rellena el array  
+    this.enemies = this.enemies.map((data, i) => {
+      // devuelve copia del array
+      const row = Math.floor(i / NUM_ROW_ENEMIES); //indice vertical
+      const aux = i % NUM_ROW_ENEMIES; // aqui consigo  qaue se bajen los enemigos
+      return new Enemies(ctx, 200 + aux * 50, 100 + row * 80, SENTIDO_ENEMIES); // ctx, x, y , s
+    });
+    console.log(this.enemies); 
+
+    this.score = 0
   }
 
   draw() {
-    this.bg.draw();
-    this.player.draw();
+    this.bg.draw(); //pinta el background
+    this.player.draw(); //pinta el jugador y balas
     
     let changes = false;
     this.enemies.forEach((enemy) => {
-      enemy.draw(SENTIDO_ENEMIES, STEPS);
+      enemy.draw(SENTIDO_ENEMIES, STEPS, this.player.getBullet(), this.player, this); //pintams el array de enemigos
 
-      if (enemy.x <= 0 || enemy.x + enemy.w >= this.ctx.canvas.width) {
+      if (enemy.x <= 0 || enemy.x + enemy.w >= this.ctx.canvas.width) { //cambiamos el sentido de los enemigos
         changes=true;
       }
     });
+    this.enemies = this.enemies.filter((enemy)=>{
+      return enemy.live === true
+    })
     if(changes){
-        SENTIDO_ENEMIES = SENTIDO_ENEMIES * -1;
+        SENTIDO_ENEMIES = SENTIDO_ENEMIES * -1; // el enemigo baja cada vez que toca la pared
         ++STEPS;
     }
+
+    if(this.enemies.length === 0){
+      this.stop();
+    } 
+    if(this.player.live === false){
+      this.stop();
+    }
+    this.total()
   }
 
+  addScore(){
+    this.score = this.score + 1;
+  }
   move() {
-    this.bg.move();
+    this.bg.move(); //mueve el background
     this.player.move();
   }
   clear() {
@@ -67,5 +93,9 @@ class Game {
     document.onkeyup = function (e) {
       game.player.onkeyup(e.keyCode);
     };
+  }
+
+  total(){
+document.getElementById('total').innerText=this.score;
   }
 }
