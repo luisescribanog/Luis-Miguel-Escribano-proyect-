@@ -9,7 +9,7 @@ class Background {
         this.vx = 0 //velocidad x
         this.vy = -1// velocidad y
         this.img = new Image()
-        this.img.src = "/assets/js/space.png" 
+        this.img.src = "../img/space.png" 
        
         
     }

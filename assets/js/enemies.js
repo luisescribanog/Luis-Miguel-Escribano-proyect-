@@ -14,18 +14,19 @@ class Enemies {
     this.ax = 0;
     this.ay = 0.2;
     this.img = new Image();
-    this.img.src = "/assets/js/enemy1.png";
+    this.img.src = "../img/enemy1.png";
     this.s = s;
     this.live = true;
     this.bullets = [];
-    this.sound = new Audio("/assets/js/enemy-death.wav");
+    this.sound = new Audio("../sounds/enemy-death.wav");
     this.sound.volume = 0.1;
-    this.soundko = new Audio("/assets/js/explosion.wav");
+    this.soundko = new Audio("../sounds/explosion.wav");
     this.soundko.volume = 0.1;
 
     setInterval(() => {
       this.shoot();
-    }, this.random(10000, 20000));
+    }, 
+    this.random(10000, 20000));
   }
 
   // move(){
@@ -46,16 +47,16 @@ class Enemies {
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
 
-  draw(s, steps, bullets, player, _) {
+  draw(s, steps, bullets, player, _) { //for para el array balas //le paso this.bullet de player
     this.ctx.drawImage(this.img, this.x, this.y, this.w, this.h);
     this.x = this.x + s;
-    this.y = this.yOriginal + steps * 50;
+    this.y = this.yOriginal + steps * 30;
     if (this.live) {
       for (let index = 0; index < bullets.length; index++) {
         const bullet = bullets[index];
         if (bullets[index].live) {
-          if (bullet.x > this.x && bullet.x < this.x + this.w) {
-            if (bullet.y > this.y && bullet.y < this.y + this.h) {
+          if (bullet.x > this.x && bullet.x < this.x + this.w) { //logica de colision parte x
+            if (bullet.y > this.y && bullet.y < this.y + this.h) {//logica de colision parte y
               //parte de y colision
               console.log("MUERTOOOOOOO");
               _.addScore();

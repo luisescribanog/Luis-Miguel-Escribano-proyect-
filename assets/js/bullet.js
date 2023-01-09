@@ -1,12 +1,12 @@
 class Bullet {
-    constructor(ctx, x, y, s=-1) {
+    constructor(ctx, x, y, s=-1.7) {
       this.ctx = ctx
   
       this.x = x
       this.y = y
-      this.r = 5
+      this.r = 4
       this.vx = 10
-      this.vy = 1
+      this.vy = 1.7
       this.ax = 0
       this.ay = 0.5
       this.live = true
@@ -16,7 +16,7 @@ class Bullet {
     draw() {
       this.ctx.beginPath();
       this.ctx.fillStyle = "#3370d4"; //blue
-      this.ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI);
+      this.ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI);//bullet
       this.ctx.fill();
       this.ctx.closePath()
     }

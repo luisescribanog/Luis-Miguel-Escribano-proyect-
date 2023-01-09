@@ -10,9 +10,9 @@ class Player {
         this.ax = 0 
         this.ay = 0
         this.img = new Image()
-        this.img.src = "/assets/js/player.png"
+        this.img.src = "../img/player.png"
         this.bullets = []
-        this.sound = new Audio("/assets/js/shoot.wav") 
+        this.sound = new Audio("../sounds/shoot.wav") 
         this.sound.volume = 0.1
 
     }
@@ -38,7 +38,7 @@ class Player {
             this.x = this.ctx.canvas.width - this.w
           }
 
-          this.bullets.forEach(b => b.move()) //muevo las balas
+          this.bullets.forEach(b => b.move()) //muevo las balas con el player
 
     }
 
@@ -77,7 +77,7 @@ class Player {
     }
 
     getBullet(){
-        this.bullets = this.bullets.filter((bullet)=>{
+        this.bullets = this.bullets.filter((bullet)=>{ //consigo balas
             return bullet.live === true
         })
         return this.bullets

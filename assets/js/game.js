@@ -33,9 +33,8 @@ class Game {
     this.interval = null;
     this.bg = new Background(ctx);
     this.player = new Player(ctx);
-    this.enemies = new Array(NUM_ENEMIES).fill({}); // me rellena el array  
+    this.enemies = new Array(NUM_ENEMIES).fill({}); 
     this.enemies = this.enemies.map((data, i) => {
-      // devuelve copia del array
       const row = Math.floor(i / NUM_ROW_ENEMIES); //indice vertical
       const aux = i % NUM_ROW_ENEMIES; // aqui consigo  qaue se bajen los enemigos
       return new Enemies(ctx, 200 + aux * 50, 100 + row * 80, SENTIDO_ENEMIES); // ctx, x, y , s
@@ -43,11 +42,12 @@ class Game {
     console.log(this.enemies); 
 
     this.score = 0
+   
   }
 
   draw() {
     this.bg.draw(); //pinta el background
-    this.player.draw(); //pinta el jugador y balas
+    this.player.draw(); //pinta el jugador 
     
     let changes = false;
     this.enemies.forEach((enemy) => {
@@ -96,6 +96,7 @@ class Game {
   }
 
   total(){
-document.getElementById('total').innerText=this.score;
+  document.getElementById('total').innerText=this.score;
+
   }
 }
