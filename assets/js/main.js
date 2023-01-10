@@ -17,7 +17,8 @@ function start(){
   canvas.style.display = 'block'
 }
 function gameover(){
-  const go = document.getElementById('gameover')
-  go.remove();
-  start();
+  // const go = document.getElementById('gameover')
+  // go.remove();
+  // start();
+  window.location.reload();
 }

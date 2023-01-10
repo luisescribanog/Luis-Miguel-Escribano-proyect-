@@ -47,11 +47,11 @@ class Enemies {
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
 
-  draw(s, steps, bullets, player, _) { //for para el array balas //le paso this.bullet de player
+  draw(s, steps, bullets, player, score) { //for para el array balas //le paso this.bullet de player
     this.ctx.drawImage(this.img, this.x, this.y, this.w, this.h);
     this.x = this.x + s;
-    this.y = this.yOriginal + steps * 30;
-    if (this.live) {
+    this.y = this.yOriginal + STEPS * 30;//pasos
+    if (this.live) { //si esta vivo entra//y comprueba cada bala//comprueba las cordenadas de la balas vivas coinciden con la cordenadas deL ENEMIGO
       for (let index = 0; index < bullets.length; index++) {
         const bullet = bullets[index];
         if (bullets[index].live) {
@@ -59,7 +59,7 @@ class Enemies {
             if (bullet.y > this.y && bullet.y < this.y + this.h) {//logica de colision parte y
               //parte de y colision
               console.log("MUERTOOOOOOO");
-              _.addScore();
+              score.addScore();
               this.sound.play();
               this.live = false;
               this.img.src = "";
@@ -69,8 +69,8 @@ class Enemies {
         }
       }
 
-      if (this.x > player.x && this.x < player.x + player.w) {
-        if (this.y > player.y && this.y < player.y + player.h) {
+      if ((this.x >= player.x && this.x < player.x + player.w) || (this.x+this.w >= player.x && this.x+this.w < player.x + player.w)) {
+        if (this.y >= player.y || this.y+this.h >= player.y) {
           //parte de y colision
           console.log("MUERTOOO JUGADOR C");
           player.live = false;
@@ -105,14 +105,16 @@ class Enemies {
     // this.bullets.push(bullet)
     const x = this.x;
     const y = this.y;
-    const bullet = new Bullet(this.ctx, x, y, 1);
+    const bullet = new Bullet(this.ctx, x +(this.w/2), y+this.h, 1);
     this.bullets.push(bullet);
   }
 
   playerDead() {
     const canvas = document.getElementById("game");
     canvas.style.display = "none";
-    const gameover = document.getElementById('gameover');
+    const gameover = document.getElementById('gameover'); 
     gameover.style.display = "block"
   }
 }
+
+

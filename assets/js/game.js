@@ -6,12 +6,12 @@ class Game {
     this.interval = null;
     this.bg = new Background(ctx);
     this.player = new Player(ctx);
-    this.enemies = new Array(NUM_ENEMIES).fill({}); // me rellena el array  
+    this.enemies = new Array(NUM_ENEMIES).fill({}); //fill array
     this.enemies = this.enemies.map((data, i) => {
       // devuelve copia del array
       const row = Math.floor(i / NUM_ROW_ENEMIES); //indice vertical
-      const aux = i % NUM_ROW_ENEMIES; // aqui consigo  qaue se bajen los enemigos
-      return new Enemies(ctx, 200 + aux * 50, 100 + row * 80, SENTIDO_ENEMIES); // ctx, x, y , s
+      const aux = i % NUM_ROW_ENEMIES; 
+      return new Enemies(ctx, 200 + aux * 50, 100 + row * 80, SENTIDO_ENEMIES); // ctx, x, y , sentido
     });
     console.log(this.enemies);
 
@@ -35,8 +35,8 @@ class Game {
     this.player = new Player(ctx);
     this.enemies = new Array(NUM_ENEMIES).fill({}); 
     this.enemies = this.enemies.map((data, i) => {
-      const row = Math.floor(i / NUM_ROW_ENEMIES); //indice vertical
-      const aux = i % NUM_ROW_ENEMIES; // aqui consigo  qaue se bajen los enemigos
+      const row = Math.floor(i / NUM_ROW_ENEMIES); 
+      const aux = i % NUM_ROW_ENEMIES;
       return new Enemies(ctx, 200 + aux * 50, 100 + row * 80, SENTIDO_ENEMIES); // ctx, x, y , s
     });
     console.log(this.enemies); 
@@ -53,8 +53,8 @@ class Game {
     this.enemies.forEach((enemy) => {
       enemy.draw(SENTIDO_ENEMIES, STEPS, this.player.getBullet(), this.player, this); //pintams el array de enemigos
 
-      if (enemy.x <= 0 || enemy.x + enemy.w >= this.ctx.canvas.width) { //cambiamos el sentido de los enemigos
-        changes=true;
+      if (enemy.x <= 0 || enemy.x + enemy.w >= this.ctx.canvas.width) {  
+        changes=true; 
       }
     });
     this.enemies = this.enemies.filter((enemy)=>{
@@ -67,6 +67,10 @@ class Game {
 
     if(this.enemies.length === 0){
       this.stop();
+      const canvas = document.getElementById("game");
+      canvas.style.display = "none";
+      const win = document.getElementById('win');
+      win.style.display = "block"
     } 
     if(this.player.live === false){
       this.stop();
